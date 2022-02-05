@@ -63,3 +63,14 @@ CompletedWithTags.args = {
 		title: "Todo title @tag1 @tag2",
 	},
 };
+
+export const TagsWithLongTodo = Template.bind({});
+TagsWithLongTodo.args = {
+	editing: false,
+	todo: {
+		completed: false,
+		id: "123",
+		title:
+			"Really long todo description and many tags. @tag1 @tag2 @tag3 @tag4",
+	},
+};
