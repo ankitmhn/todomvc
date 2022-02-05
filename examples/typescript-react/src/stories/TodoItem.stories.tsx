@@ -44,8 +44,22 @@ Completed.args = {
 	},
 };
 
-export const Editing = Template.bind({});
-Editing.args = {
-	...Active.args,
-	editing: true,
+export const WithTags = Template.bind({});
+WithTags.args = {
+	editing: false,
+	todo: {
+		completed: false,
+		id: "123",
+		title: "Todo title @tag1 @tag2",
+	},
+};
+
+export const CompletedWithTags = Template.bind({});
+CompletedWithTags.args = {
+	editing: false,
+	todo: {
+		completed: true,
+		id: "123",
+		title: "Todo title @tag1 @tag2",
+	},
 };
