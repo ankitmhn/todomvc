@@ -17,7 +17,10 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 
   constructor(props : ITodoItemProps){
     super(props);
-    this.state = { editText: this.props.todo.title };
+    // const [todoText, ...tags] = this.props.todo.title.split('@');
+    const {tags, todoText} = this.parseTitleToTokens(this.props.todo.title);
+    console.log({todoText, tags})
+    this.state = { editText: this.props.todo.title, todoText: todoText ?? "", tags: tags ?? [] };
   }
 
   public handleSubmit(event : React.FormEvent) {
@@ -44,9 +47,10 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
     }
   }
 
-  public handleChange(event : React.FormEvent) {
-    var input : any = event.target;
-    this.setState({ editText : input.value });
+  public handleChange(event : React.ChangeEvent<HTMLInputElement>) {
+    var input = event.target;
+    const {tags, todoText} = this.parseTitleToTokens(input.value);
+    this.setState({ editText : input.value, tags, todoText });
   }
 
   /**
@@ -78,6 +82,26 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
     }
   }
 
+  private renderTags() {
+    if(this.props.editing) return null;
+    return this.state.tags.map((t, i) => <div key={i} style={{
+      fontSize: "0.8rem",
+      fontWeight: "bold",
+      borderRadius: "100px",
+      lineHeight: 1,
+      marginRight: 3,
+      background: "red",
+      padding: "3px 6px",
+      marginTop: "auto",
+      marginBottom: "auto"
+    }}>{t}</div>)
+  }
+
+  private parseTitleToTokens(title: string): {todoText: string, tags: Array<string>} {
+    const [todoText, ...tags] = title.split('@');
+    return {todoText, tags}
+  }
+
   public render() {
     return (
       <li className={classNames({
@@ -91,8 +115,12 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
             checked={this.props.todo.completed}
             onChange={this.props.onToggle}
           />
-          <label onDoubleClick={ e => this.handleEdit() }>
-            {this.props.todo.title}
+          <label onDoubleClick={ e => this.handleEdit() } style={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingRight: 60
+          }}>
+            <div>{this.state.todoText}</div><div style={{display: "flex", flexDirection: "row", }}>{this.renderTags()}</div>
           </label>
           <button className="destroy" onClick={this.props.onDestroy} />
         </div>

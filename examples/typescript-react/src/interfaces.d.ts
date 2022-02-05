@@ -16,7 +16,9 @@ interface ITodoItemProps {
 }
 
 interface ITodoItemState {
-  editText : string
+	editText: string;
+	todoText: string;
+	tags: Array<string>;
 }
 
 interface ITodoFooterProps {

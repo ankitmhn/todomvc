@@ -13,10 +13,11 @@ Named exports from component files
 
 3. What's bad?
 
+Conditional rendering is handled in CSS using classes
 Build output directory is same as the source directory.
 It is a dated project - lots of `vars` floating around. 
 Maybe the requirement was to not use any external libraries, but I don't like the hacky way the routing has been setup as well.
-
+Improper typing on event for `handleChange` in todoItem.tsx
 HMR is not setup
 Missing .gitignore
 JS files being generated alongside TS source files

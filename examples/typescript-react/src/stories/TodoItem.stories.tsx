@@ -12,6 +12,19 @@ export default {
 			title: "My todo",
 		},
 	},
+	decorators: [
+		(Story) => (
+			<section className="todoapp">
+				<div>
+					<section className="main">
+						<ul className="todo-list">
+							<Story />
+						</ul>
+					</section>
+				</div>
+			</section>
+		),
+	],
 } as ComponentMeta<typeof TodoItem>;
 
 const Template: ComponentStory<typeof TodoItem> = (args) => (
@@ -20,3 +33,19 @@ const Template: ComponentStory<typeof TodoItem> = (args) => (
 
 export const Active = Template.bind({});
 Active.args = {};
+
+export const Completed = Template.bind({});
+Completed.args = {
+	editing: false,
+	todo: {
+		completed: true,
+		id: "123",
+		title: "My completed todo",
+	},
+};
+
+export const Editing = Template.bind({});
+Editing.args = {
+	...Active.args,
+	editing: true,
+};
