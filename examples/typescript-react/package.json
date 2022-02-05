@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc -p ./src/ && node ./node_modules/browserify/bin/cmd ./build/app.js -o ./build/bundle.js",
-    "start": "node ./serve.js"
+    "start": "node ./serve.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@types/classnames": "^2.2.6",
@@ -16,8 +18,15 @@
     "todomvc-common": "^1.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@storybook/addon-actions": "^6.4.18",
+    "@storybook/addon-docs": "^6.4.18",
+    "@storybook/addon-essentials": "^6.4.18",
+    "@storybook/addon-links": "^6.4.18",
+    "@storybook/react": "^6.4.18",
+    "babel-loader": "^8.2.3",
     "browserify": "^16.2.3",
     "node-static": "^0.7.11",
-    "typescript": "^2.9.2"
+    "typescript": "^3.0.0"
   }
 }
