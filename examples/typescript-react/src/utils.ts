@@ -43,6 +43,32 @@ class Utils {
     }
     return newObj;
   }
+
+  public static beginsWithAt(text: string) {
+    return text[0] === '@'
+  }
+
+  public static parseIntoToTokens(text: string): {
+		todoText: string;
+		tags: Array<string> | undefined;
+	} {
+		/**
+		 // const [todoText, ...tags] = text.split("@");
+		 *  the logic above wouldn't work for tags within the todo title
+		 *  since it assumes tags would always be at the end.
+		 */
+		const todoText = text
+			.split(" ")
+			.filter((word) => !this.beginsWithAt(word))
+			.join(" ");
+
+		const tags = text
+			.split(" ")
+			.filter((word) => this.beginsWithAt(word))
+			.map((tag) => tag.split("@")[1]); //removes @ from tags
+
+		return { todoText, tags };
+	}
 }
 
 export { Utils };

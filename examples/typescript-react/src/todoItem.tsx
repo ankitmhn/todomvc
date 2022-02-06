@@ -10,6 +10,7 @@ import * as classNames from "classnames";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ENTER_KEY, ESCAPE_KEY } from "./constants";
+import { Utils } from "./utils";
 // import styles from "../styles/todoitem.module.css";
 
 class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
@@ -17,7 +18,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 
 	constructor(props: ITodoItemProps) {
 		super(props);
-		const { tags, todoText } = this.parseIntoToTokens(this.props.todo.title);
+		const { tags, todoText } = Utils.parseIntoToTokens(this.props.todo.title);
 		this.state = {
 			editText: this.props.todo.title,
 			todoText: todoText ?? "",
@@ -51,7 +52,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 
 	public handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		var input = event.target;
-		const { tags, todoText } = this.parseIntoToTokens(input.value);
+		const { tags, todoText } = Utils.parseIntoToTokens(input.value);
 		this.setState({ editText: input.value, tags, todoText });
 	}
 
@@ -110,28 +111,6 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 				{t}
 			</div>
 		));
-	}
-
-	private parseIntoToTokens(text: string): {
-		todoText: string;
-		tags: Array<string> | undefined;
-	} {
-		/**
-		 // const [todoText, ...tags] = text.split("@");
-		 *  the logic above wouldn't work for tags within the todo title
-		 *  since it assumes tags would always be at the end.
-		 */
-		const todoText = text
-			.split(" ")
-			.filter((word) => word[0] !== "@")
-			.join(" ");
-
-		const tags = text
-			.split(" ")
-			.filter((word) => word[0] === "@")
-			.map((tag) => tag.split("@")[1]); //removes @ from tags
-
-		return { todoText, tags };
 	}
 
 	public render() {
