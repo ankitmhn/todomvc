@@ -116,7 +116,21 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 		todoText: string;
 		tags: Array<string> | undefined;
 	} {
-		const [todoText, ...tags] = text.split("@");
+		/**
+		 // const [todoText, ...tags] = text.split("@");
+		 *  the logic above wouldn't work for tags within the todo title
+		 *  since it assumes tags would always be at the end.
+		 */
+		const todoText = text
+			.split(" ")
+			.filter((word) => word[0] !== "@")
+			.join(" ");
+
+		const tags = text
+			.split(" ")
+			.filter((word) => word[0] === "@")
+			.map((tag) => tag.split("@")[1]); //removes @ from tags
+
 		return { todoText, tags };
 	}
 
